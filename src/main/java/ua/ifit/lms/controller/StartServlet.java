@@ -1,4 +1,6 @@
 package ua.ifit.lms.controller;
+import ua.ifit.lms.view.IndexSingletonView;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,26 +20,28 @@ public class StartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-               out.println("<!doctype html>\n" +
-                "<html lang=\"en\">" +
-               "<meta charset=\"utf-8\">" +
-               "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">" +
-                "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
-               "<head><title>MyServlet</title></head><body>");
-       out.write("<h1>Hello Servlet World!</h1>");
-       out.println("<script src=\"js/jquery-3.4.0.min.js\"></script>\n" +
-               "    <script src=\"js/popper.min.js\"></script>\n" +
-               "    <script src=\"js/bootstrap.min.js\"></script>" +
-               "</body>");
-        out.println("</html>");
+  //             out.println("<!doctype html>\n" +
+ //               "<html lang=\"en\">" +
+ //              "<meta charset=\"utf-8\">" +
+  //             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">" +
+  //              "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
+  //             "<head><title>MyServlet</title></head><body>");
+ //      out.write("<h1>Hello Servlet World!</h1>");
+//       out.println("<script src=\"js/jquery-3.4.0.min.js\"></script>\n" +
+//               "    <script src=\"js/popper.min.js\"></script>\n" +
+//               "    <script src=\"js/bootstrap.min.js\"></script>" +
+//               "</body>");
+//        out.println("</html>");
+//
+        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
+        out.println(indexSingletonView.getIndexHtml()); }
 
-        /*try {
-            out.println("<html><head><title>MyServlet</title></head><body>");
-            out.write("<H1>Hello Servlet World!</H1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        } */
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        String path = getServletContext().getRealPath("html/");
+        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
+        indexSingletonView.setPath(path);
     }
 }
