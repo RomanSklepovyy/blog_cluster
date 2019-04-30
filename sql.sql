@@ -1,35 +1,16 @@
-create table user
-(
-	id int not null,
-	name varchar(30) not null,
-	password varchar(20) not null,
-	email varchar(30) not null,
-	date_creation datetime not null,
-	date_lastentered datetime not null,
-	constraint user_email_uindex
-		unique (email),
-	constraint user_id_uindex
-		unique (id),
-	constraint user_password_uindex
-		unique (password)
-);
-
-alter table user
-	add primary key (id);
-
 create table note
 (
-	id int not null,
-	user_id int not null,
-	text longtext null,
-	date_created datetime not null,
-	date_last_edited datetime not null,
-	constraint note_id_uindex
-		unique (id),
-	constraint note_user_id_uindex
-		unique (user_id)
+  id int auto_increment
+    primary key,
+  user_id int not null,
+  title varchar(25) null,
+  text longtext null,
+  date_created datetime null,
+  date_last_edired datetime null
 );
 
-alter table note
-	add primary key (id);
+INSERT INTO blog_database.note (id, user_id, title, text, date_created, date_last_edited)
+VALUES (1, 1, 'Hello', 'Hello world!', '2019-04-19 16:04:26', '2019-04-19 16:04:31');
+
+
 
