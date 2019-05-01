@@ -1,5 +1,8 @@
 package ua.ifit.lms.controller;
+import ua.ifit.lms.dao.entity.Note;
+import ua.ifit.lms.dao.repository.NoteRepository;
 import ua.ifit.lms.view.IndexSingletonView;
+import ua.ifit.lms.view.NoteView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,22 +23,24 @@ public class StartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-  //             out.println("<!doctype html>\n" +
- //               "<html lang=\"en\">" +
- //              "<meta charset=\"utf-8\">" +
-  //             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">" +
-  //              "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
-  //             "<head><title>MyServlet</title></head><body>");
- //      out.write("<h1>Hello Servlet World!</h1>");
-//       out.println("<script src=\"js/jquery-3.4.0.min.js\"></script>\n" +
-//               "    <script src=\"js/popper.min.js\"></script>\n" +
-//               "    <script src=\"js/bootstrap.min.js\"></script>" +
-//               "</body>");
-//        out.println("</html>");
-//
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        out.println(indexSingletonView.getIndexHtml()); }
+        out.println(indexSingletonView.getIndexHtml());
 
+        NoteView noteView = new NoteView();
+
+        if (request.getParameter("title") != null &&
+                request.getParameter("text") != null) {
+
+            String title = request.getParameter("title");
+            String text = request.getParameter("text");
+
+            NoteRepository noteRepository = new NoteRepository();
+            Note note = noteRepository.getNoteByTitle(title);
+            out.println(noteView.newNoteCreated(note));
+        } else {
+            out.println(noteView.getNotePage());
+        }
+    }
 
     @Override
     public void init() throws ServletException {
