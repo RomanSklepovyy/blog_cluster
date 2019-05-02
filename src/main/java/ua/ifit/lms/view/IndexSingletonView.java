@@ -25,14 +25,14 @@ public class IndexSingletonView {
     public void setPath(String path) {
         this.path = path;
         this.indexHtml = getPartialHtml("index");
-        this.note = getPartialHtml("note");
+        this.note = getPartialHtml("note-form");
     }
 
     public String getIndexHtml() {
         return indexHtml;
     }
 
-    public String getNote() {return note;}
+    public String getNoteHtml() {return note;}
 
     private String getPartialHtml(String filename){
         StringBuilder strb = new StringBuilder();

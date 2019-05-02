@@ -7,14 +7,14 @@ public class NoteView {
     public String getNotePage() {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
-        String Note = indexSingletonView.getNote();
+        String Note = indexSingletonView.getNoteHtml();
         return indBase.replace("<!--### insert html here ### -->", Note);
     }
 
     public String newNoteCreated(Note note) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
-        String Note = indexSingletonView.getNote();
+        String Note = indexSingletonView.getNoteHtml();
         return indBase.replace("<!--### insert html here ### -->", "Hello " + note.getTitle());
     }
 }
