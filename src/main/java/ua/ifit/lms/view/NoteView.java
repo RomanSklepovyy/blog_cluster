@@ -8,7 +8,10 @@ public class NoteView {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
         String Note = indexSingletonView.getNoteHtml();
-        return indBase.replace("<!--### insert html here ### -->", Note);
+        String Menu = indexSingletonView.getMenuHtml();
+        return indBase
+                .replace("<!--### insert html here ### -->", Menu)
+                .replace("<!--### insert html here ### -->", Note);
     }
 
     public String newNoteCreated(Note note) {
