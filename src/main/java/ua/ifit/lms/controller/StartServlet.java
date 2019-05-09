@@ -1,5 +1,8 @@
 package ua.ifit.lms.controller;
+import ua.ifit.lms.dao.entity.User;
+import ua.ifit.lms.dao.repository.UserRepository;
 import ua.ifit.lms.view.IndexSingletonView;
+import ua.ifit.lms.view.LoginView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,31 +14,36 @@ import java.io.PrintWriter;
 /**
  * Start servlet
  */
-@WebServlet(name = "Start", urlPatterns = {"/"})
+@WebServlet(name = "StartServlet", urlPatterns = {"/"}, loadOnStartup = 1)
 public class StartServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { }
+    }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-  //             out.println("<!doctype html>\n" +
- //               "<html lang=\"en\">" +
- //              "<meta charset=\"utf-8\">" +
-  //             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">" +
-  //              "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">" +
-  //             "<head><title>MyServlet</title></head><body>");
- //      out.write("<h1>Hello Servlet World!</h1>");
-//       out.println("<script src=\"js/jquery-3.4.0.min.js\"></script>\n" +
-//               "    <script src=\"js/popper.min.js\"></script>\n" +
-//               "    <script src=\"js/bootstrap.min.js\"></script>" +
-//               "</body>");
-//        out.println("</html>");
-//
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        out.println(indexSingletonView.getIndexHtml()); }
+        out.println(indexSingletonView.getIndexHtml());
 
+        // get user credentials
+        LoginView loginView = new LoginView();
+        if (request.getParameter("email") != null &&
+                request.getParameter("password") != null) {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            // test repository
+            UserRepository userRepository = new UserRepository();
+            User user = userRepository.getUserByEmailByPassword(email, password);
+            out.println(loginView.welcomUserPage(user));
+        } else {
+            out.println(loginView.getloginPage());
+        }
+
+    }
 
     @Override
     public void init() throws ServletException {
