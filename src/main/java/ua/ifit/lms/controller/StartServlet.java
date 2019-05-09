@@ -1,8 +1,8 @@
 package ua.ifit.lms.controller;
-import ua.ifit.lms.dao.entity.User;
-import ua.ifit.lms.dao.repository.UserRepository;
+import ua.ifit.lms.dao.entity.Note;
+import ua.ifit.lms.dao.repository.NoteRepository;
 import ua.ifit.lms.view.IndexSingletonView;
-import ua.ifit.lms.view.LoginView;
+import ua.ifit.lms.view.NoteView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +14,10 @@ import java.io.PrintWriter;
 /**
  * Start servlet
  */
-@WebServlet(name = "StartServlet", urlPatterns = {"/"}, loadOnStartup = 1)
+@WebServlet(name = "Start", urlPatterns = {"/"})
 public class StartServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,21 +26,20 @@ public class StartServlet extends HttpServlet {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         out.println(indexSingletonView.getIndexHtml());
 
-        // get user credentials
-        LoginView loginView = new LoginView();
-        if (request.getParameter("email") != null &&
-                request.getParameter("password") != null) {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+        NoteView noteView = new NoteView();
 
-            // test repository
-            UserRepository userRepository = new UserRepository();
-            User user = userRepository.getUserByEmailByPassword(email, password);
-            out.println(loginView.welcomUserPage(user));
+        if (request.getParameter("title") != null &&
+                request.getParameter("text") != null) {
+
+            String title = request.getParameter("title");
+            String text = request.getParameter("text");
+
+            NoteRepository noteRepository = new NoteRepository();
+            Note note = noteRepository.getNoteByTitle(title);
+            out.println(noteView.newNoteCreated(note));
         } else {
-            out.println(loginView.getloginPage());
+            out.println(noteView.getNotePage());
         }
-
     }
 
     @Override
