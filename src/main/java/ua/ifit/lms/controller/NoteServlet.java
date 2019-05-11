@@ -1,6 +1,7 @@
 package ua.ifit.lms.controller;
 
 import ua.ifit.lms.view.IndexSingletonView;
+import ua.ifit.lms.view.NoteView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +20,11 @@ public class NoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        NoteView noteView = new NoteView();
+
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         out.println(indexSingletonView.getIndexHtml()
-                .replace("<!--### insert html here ### -->", "<h1>Hello notes</h1>"));
+                .replace("<!--### insert html here ### -->", noteView.getNotePage()));
     }
 }

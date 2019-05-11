@@ -23,5 +23,6 @@ create table user
 	date_last_entered datetime not null
 );
 
-
+INSERT INTO data.user (id, email, password, name, date_created, date_last_edited)
+VALUES (1, 'test@gmail.com', '1111', 'Test User', '2019-04-19 16:04:26', '2019-04-19 16:04:31');
 

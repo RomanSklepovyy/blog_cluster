@@ -24,9 +24,13 @@ public class StartServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        out.println(indexSingletonView.getIndexHtml());
 
-        NoteView noteView = new NoteView();
+        String Menu = indexSingletonView.getMenuHtml();
+
+        out.println(indexSingletonView.getIndexHtml()
+                    .replace("<!--### insert html here ### -->", Menu));
+
+        /*NoteView noteView = new NoteView();
 
         if (request.getParameter("title") != null &&
                 request.getParameter("text") != null) {
@@ -39,7 +43,7 @@ public class StartServlet extends HttpServlet {
             out.println(noteView.newNoteCreated(note));
         } else {
             out.println(noteView.getNotePage());
-        }
+        } */
     }
 
     @Override

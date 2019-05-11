@@ -8,13 +8,18 @@ public class LoginView {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
         String loginForm = indexSingletonView.getLoginForm();
-        return indBase.replace("<!--### insert html here ### -->", loginForm);
+        String Menu = indexSingletonView.getMenuHtml();
+        return indBase
+                .replace("<!--### insert html here ### -->", Menu)
+                .replace("<!--### insert html here ### -->", loginForm);
     }
 
-    public String welcomUserPage(User user) {
+    public String welcomeUserPage(User user) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
+        String Menu = indexSingletonView.getMenuHtml();
         String indBase = indexSingletonView.getIndexHtml();
-        String loginForm = indexSingletonView.getLoginForm();
-        return indBase.replace("<!--### insert html here ### -->", "Hello " + user.getName());
+        return indBase
+                .replace("<!--### insert html here ### -->", Menu)
+                .replace("<!--### insert html here ### -->", "Hello" + user.getName());
     }
 }
