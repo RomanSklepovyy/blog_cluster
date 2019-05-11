@@ -1,5 +1,7 @@
 package ua.ifit.lms.controller;
 
+import ua.ifit.lms.dao.entity.User;
+import ua.ifit.lms.dao.repository.UserRepository;
 import ua.ifit.lms.view.IndexSingletonView;
 import ua.ifit.lms.view.LoginView;
 
@@ -21,8 +23,23 @@ public class UserServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        LoginView loginView = new LoginView();
+
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        out.println(indexSingletonView.getIndexHtml()
-                .replace("<!--### insert html here ### -->", "<h1>Hello users</h1>"));
+
+
+        if (request.getParameter("email") != null &&
+                request.getParameter("password") != null) {
+
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            UserRepository userRepository = new UserRepository();
+            User user = userRepository.getUserByEmailByPassword(email, password);
+            out.println(loginView.welcomeUserPage(user));
+        } else {
+            out.println(indexSingletonView.getIndexHtml()
+                    .replace("<!--### insert html here ### -->", loginView.getloginPage()));
+        }
     }
 }
