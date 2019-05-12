@@ -11,6 +11,7 @@ public class IndexSingletonView {
 
     private String path;
     private String indexHtml;
+    private String loginForm;
     private String note;
     private String menu;
 
@@ -28,10 +29,15 @@ public class IndexSingletonView {
         this.indexHtml = getPartialHtml("index");
         this.note = getPartialHtml("note-form");
         this.menu = getPartialHtml("menu");
+        this.loginForm = getPartialHtml("login-form");
     }
 
     public String getIndexHtml() {
         return indexHtml;
+    }
+
+    public String getLoginForm() {
+        return loginForm;
     }
 
     public String getNoteHtml() {return note;}
