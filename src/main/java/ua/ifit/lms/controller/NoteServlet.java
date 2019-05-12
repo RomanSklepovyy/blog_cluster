@@ -31,18 +31,12 @@ public class NoteServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-        if (user==null) {
+        if (user == null) {
             response.sendRedirect("/");
         }
-
-        NoteRepository noteRepository = new NoteRepository();
-        List<Note> notes = noteRepository.getNotesByUserID(user.getId());
-
-        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        out.println(indexSingletonView.getIndexHtml()
-                .replace("<!--### insert html here ### -->", "<h1>Hello " + user.getName() + "</h1>" +
-                        notes.stream()
-                                .map(e -> "<div>" + e.getText() + "</div>")
-                                .collect(Collectors.joining(" "))));
+        else {
+            NoteView noteView = new NoteView();
+            out.println(noteView.getNotesList(user));
+        }
     }
 }
