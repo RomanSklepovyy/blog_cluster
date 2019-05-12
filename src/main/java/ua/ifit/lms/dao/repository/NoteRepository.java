@@ -6,38 +6,42 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NoteRepository {
 
-    public Note getNoteByTitle(String title) {
-
+    public List<Note> getNotesByUserID(long userid) {
         DataSource dataSource = new DataSource();
+        List<Note> notes = new ArrayList<>();
 
-        String query = "SELECT id, user_id, title, text, date_created, date_last_entered" +
-                "From note" + "Where note.title ='" + title +"'";
+        String query = "SELECT id, user_id, text, title, date_created, date_last_edited " +
+                "FROM note " +
+                "WHERE note.user_id=" + userid;
 
         try (
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            )
+                // get connection with our database
+                Connection connection = dataSource.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+        )
         {
-            if (resultSet.next()) {
-                Note note = new Note(
+            while (resultSet.next())  {
+                Note note =  new Note(
                         resultSet.getLong("id"),
                         resultSet.getLong("user_id"),
-                        resultSet.getString("title"),
                         resultSet.getString("text"),
+                        resultSet.getString("title"),
                         resultSet.getString("date_created"),
-                        resultSet.getString("date_last_entered")
+                        resultSet.getString("date_last_edited")
                 );
+                notes.add(note);
 
-                return note;
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return notes;
     }
 }
