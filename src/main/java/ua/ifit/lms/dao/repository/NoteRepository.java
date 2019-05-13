@@ -2,14 +2,19 @@ package ua.ifit.lms.dao.repository;
 
 import ua.ifit.lms.dao.entity.Note;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NoteRepository {
+
+    public static final String NOTES_TABLE = "note";
+    public static final String NOTES_ID = "id";
+    public static final String NOTES_USER_ID = "user_id";
+    public static final String NOTES_TITLE = "title";
+    public static final String NOTES_TEXT = "text";
+    public static final String NOTES_DATE_CREATED = "date_created";
+    public static final String NOTES_DATE_LAST_EDITED = "date_last_edited";
 
     public List<Note> getNotesByUserID(long userid) {
         DataSource dataSource = new DataSource();
@@ -44,4 +49,22 @@ public class NoteRepository {
         }
         return notes;
     }
+
+    public void CreateNewNote(String user_id, String text, String title, String date_created, String date_last_edited) {
+        String query = "INSERT INTO" + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
+                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
+
+        DataSource dataSource = new DataSource();
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, user_id);
+            preparedStatement.setString(2, text);
+            preparedStatement.setString(3, title);
+            preparedStatement.setString(4, date_created);
+            preparedStatement.setString(5, date_last_edited);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {e.printStackTrace();}
+    }
+
 }
