@@ -50,7 +50,7 @@ public class NoteRepository {
         return notes;
     }
 
-    public void CreateNewNote(String user_id, String text, String title, String date_created, String date_last_edited) {
+    public void CreateNewNote(Long user_id, String text, String title, String date_created, String date_last_edited) {
         String query = "INSERT INTO" + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
                 + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
 
@@ -58,7 +58,7 @@ public class NoteRepository {
 
         try {
             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, user_id);
+            preparedStatement.setLong(1, user_id);
             preparedStatement.setString(2, text);
             preparedStatement.setString(3, title);
             preparedStatement.setString(4, date_created);
