@@ -51,7 +51,7 @@ public class NoteRepository {
     }
 
     public void CreateNewNote(Long user_id, String text, String title, String date_created, String date_last_edited) {
-        String query = "INSERT INTO" + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
+        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
                 + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
 
         DataSource dataSource = new DataSource();

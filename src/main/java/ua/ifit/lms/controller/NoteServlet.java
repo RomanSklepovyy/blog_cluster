@@ -58,6 +58,7 @@ public class NoteServlet extends HttpServlet {
 
                 NoteRepository noteRepository = new NoteRepository();
                 noteRepository.CreateNewNote(user_id, text, title, date_created, date_last_edited );
+                response.sendRedirect("/notes/");
             }
         }
     }
