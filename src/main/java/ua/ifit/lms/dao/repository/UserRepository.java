@@ -16,7 +16,7 @@ public class UserRepository {
     public static final String USER_DATE_CREATED = "date_created";
     public static final String USER_DATELAST_ENTERED = "date_last_entered";
 
-    public void signUpUser ( String email, String password, String name, String date_created, String date_last_entered){
+    /*public void signUpUser ( String email, String password, String name, String date_created, String date_last_entered){
         String insert = "INSERT INTO " + USER_TABLE +"("
                 +","+USER_EMAIL+"" + ","
                 +USER_PASSWORD+","+USER_NAME+","+
@@ -35,10 +35,35 @@ public class UserRepository {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {e.printStackTrace();}
 
+        }*/
+
+    public void saveUser(User user) {
+
+        DataSource dataSource = new DataSource();
+
+        try(
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = (user.getId() == 0L) ?
+                        con.prepareStatement("INSERT INTO user (email, password, name, date_created, date_last_entered) VALUES (?,?,?,?,?)") :
+                        con.prepareStatement("UPDATE user SET email=?, password=?, name=? WHERE id=" + user.getId());
+        ) {
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getName());
+            if (user.getId() == 0L) {
+                stmt.setString(4, user.getDate_created());
+                stmt.setString(5, user.getDate_last_entered());
+            }
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    /**
-     * Get User By Email and Password from User Table
-     */
+    }
+
+
+
     public User getUserByEmailByPassword(String email, String password) {
 
         DataSource dataSource = new DataSource();
