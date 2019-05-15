@@ -32,9 +32,7 @@ public class UserServlet<request> extends HttpServlet {
         UserRepository userRepository = new UserRepository();
         LoginView loginView = new LoginView();
 
-
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-
 
         if (request.getParameter("email") != null &&
                 request.getParameter("password") != null) {
@@ -49,15 +47,11 @@ public class UserServlet<request> extends HttpServlet {
                 session.setAttribute("user", user);
                 response.sendRedirect("/notes/index");
             } else {
-                out.println(indexSingletonView.getIndexHtml()
-                        .replace("<!--### insert html here ### -->",
-                                loginView.getloginPage(false)));
+                out.println(loginView.getloginPage(false));
             }
 
         } else {
-            out.println(indexSingletonView.getIndexHtml()
-                    .replace("<!--### insert html here ### -->",
-                            loginView.getloginPage(true)));
+            out.println(loginView.getloginPage(true));
         }
         if (request.getParameter("name") != null && request.getParameter("email") != null && request.getParameter("password") != null) {
 

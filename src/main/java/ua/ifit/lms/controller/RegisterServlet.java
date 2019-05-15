@@ -27,39 +27,26 @@ import java.io.PrintWriter;
          HttpSession session = request.getSession();
          IndexSingletonView indexSingletonView =IndexSingletonView.getInstance();
          String RegisterForm = indexSingletonView.getRegisterForm();
+         RegisterView registerView = new RegisterView();
 
-         //if((request.getParameter("name") != null) && (request.getParameter("email") != null) && (request.getParameter("password")!= null)){
-         String name = request.getParameter("name");
-         String email = request.getParameter("email");
-         String password = request.getParameter("password");
-         User user = (User) session.getAttribute("user");
-         if (user == null) {
-                 response.sendRedirect("/users/");
-             }
+         out.println(registerView.getRegisterForm());
 
-             else {
+         if (request.getParameter("email")!=null && request.getParameter("password")!=null && request.getParameter("name") !=null) {
 
-                 RegisterView registerView = new RegisterView();
-                 out.println(registerView.getRegisterForm());
+             java.util.Date dt = new java.util.Date();
+             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String date_created = sdf.format(dt);
+             String date_last_entered = sdf.format(dt);
 
-                 if (request.getParameter("email")!=null && request.getParameter("password")!=null && request.getParameter("name") !=null) {
+             User user = new User(0L, request.getParameter("email"), request.getParameter("password"), request.getParameter("name"), date_created, date_last_entered);
 
-
-
-                     long user_id = user.getId();
-
-                     java.util.Date dt = new java.util.Date();
-                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                     String date_created = sdf.format(dt);
-                     String date_last_entered = sdf.format(dt);
-
-                     UserRepository userRepository = new UserRepository();
-                     userRepository.saveUser(user);
-                     response.sendRedirect("/register/");
-                 }
-
+             UserRepository userRepository = new UserRepository();
+             userRepository.saveUser(user);
+             response.sendRedirect("/users/");
          }
-     }
 
+     }
  }
+
+
 
