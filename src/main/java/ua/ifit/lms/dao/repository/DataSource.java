@@ -9,9 +9,9 @@ public class DataSource implements AutoCloseable {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL="jdbc:mysql://localhost:3306/blog_database?user=root&password=1111";
-   // static final String name = "root";
-   // static final String password = "1111";
+
     private Connection connection = null;
+
 
     /**
      * Конструктор.

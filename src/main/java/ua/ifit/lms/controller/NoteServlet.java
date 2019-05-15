@@ -5,7 +5,6 @@ import ua.ifit.lms.dao.entity.User;
 import ua.ifit.lms.dao.repository.NoteRepository;
 import ua.ifit.lms.view.IndexSingletonView;
 import ua.ifit.lms.view.NoteView;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,18 +24,43 @@ public class NoteServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
+        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
+        String NoteForm = indexSingletonView.getNoteHtml();
+
+
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("/");
+            response.sendRedirect("/users/");
         }
+
         else {
+
             NoteView noteView = new NoteView();
-            out.println(noteView.getNotesList(user));
+            out.println(noteView.getNotesList(user)
+                .replace("<!--### insert html 2 here ### -->", NoteForm));
+
+            if (request.getParameter("title")!=null && request.getParameter("text")!=null) {
+
+                String title = request.getParameter("title");
+                String text = request.getParameter("text");
+
+                long user_id = user.getId();
+
+                java.util.Date dt = new java.util.Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date_created = sdf.format(dt);
+                String date_last_edited = sdf.format(dt);
+
+                NoteRepository noteRepository = new NoteRepository();
+                noteRepository.CreateNewNote(user_id, text, title, date_created, date_last_edited );
+                response.sendRedirect("/notes/");
+            }
         }
     }
 }

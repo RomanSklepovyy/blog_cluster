@@ -29,21 +29,6 @@ public class StartServlet extends HttpServlet {
 
         out.println(indexSingletonView.getIndexHtml()
                     .replace("<!--### insert html here ### -->", Menu));
-
-        /*NoteView noteView = new NoteView();
-
-        if (request.getParameter("title") != null &&
-                request.getParameter("text") != null) {
-
-            String title = request.getParameter("title");
-            String text = request.getParameter("text");
-
-            NoteRepository noteRepository = new NoteRepository();
-            Note note = noteRepository.getNoteByTitle(title);
-            out.println(noteView.newNoteCreated(note));
-        } else {
-            out.println(noteView.getNotePage());
-        } */
     }
 
     @Override

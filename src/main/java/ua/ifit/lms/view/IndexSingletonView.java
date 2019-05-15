@@ -14,6 +14,8 @@ public class IndexSingletonView {
     private String loginForm;
     private String note;
     private String menu;
+    private String loginformfail;
+    private String register;
 
     private static IndexSingletonView ourInstance = new IndexSingletonView();
 
@@ -30,6 +32,8 @@ public class IndexSingletonView {
         this.note = getPartialHtml("note-form");
         this.menu = getPartialHtml("menu");
         this.loginForm = getPartialHtml("login-form");
+        this.loginformfail = getPartialHtml("login-form-fail");
+        this.register = getPartialHtml("register");
     }
 
     public String getIndexHtml() {
@@ -42,7 +46,11 @@ public class IndexSingletonView {
 
     public String getNoteHtml() {return note;}
 
-    public String getMenuHtml() {return menu;};
+    public String getMenuHtml() {return menu;}
+
+    public String getLoginformFail() {return loginformfail;}
+
+    public String getRegisterForm() {return register;}
 
     private String getPartialHtml(String filename){
         StringBuilder strb = new StringBuilder();
