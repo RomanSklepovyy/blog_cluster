@@ -18,12 +18,12 @@ public class NoteView {
                 .replace("<!--### insert html here ### -->", Note);
     }
 
-    public String newNoteCreated(Note note) {
+    /*public String newNoteCreated(Note note) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
         String indBase = indexSingletonView.getIndexHtml();
         String Note = indexSingletonView.getNoteHtml();
         return indBase.replace("<!--### insert html here ### -->", "Hello " + note.getTitle());
-    }
+    }*/
 
     public String getNotesList(User user) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();

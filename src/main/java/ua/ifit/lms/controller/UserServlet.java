@@ -46,11 +46,16 @@ public class UserServlet<request> extends HttpServlet {
             if (user != null) {
                 session.setAttribute("user", user);
                 response.sendRedirect("/notes/index");
+            } else {
+                out.println(indexSingletonView.getIndexHtml()
+                        .replace("<!--### insert html here ### -->",
+                                loginView.getloginPage(false)));
             }
-            out.println(loginView.welcomeUserPage(user));
+
         } else {
             out.println(indexSingletonView.getIndexHtml()
-                    .replace("<!--### insert html here ### -->", loginView.getloginPage()));
+                    .replace("<!--### insert html here ### -->",
+                            loginView.getloginPage(true)));
         }
         if (request.getParameter("name")!= null && request.getParameter("email")!=null && request.getParameter("password")!=null) {
 
