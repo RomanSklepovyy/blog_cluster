@@ -43,9 +43,14 @@ public class UserServlet extends HttpServlet {
             if (user != null) {
                 session.setAttribute("user", user);
                 response.sendRedirect("/notes/index");
+                out.println(loginView.welcomeUserPage(user));
+            } else {
+                out.println("No User Found");
             }
-            out.println(loginView.welcomeUserPage(user));
+
         } else {
+            System.out.println(indexSingletonView.getIndexHtml());
+            System.out.println(loginView.getloginPage());
             out.println(indexSingletonView.getIndexHtml()
                     .replace("<!--### insert html here ### -->", loginView.getloginPage()));
         }

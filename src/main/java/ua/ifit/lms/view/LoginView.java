@@ -20,6 +20,6 @@ public class LoginView {
         String indBase = indexSingletonView.getIndexHtml();
         return indBase
                 .replace("<!--### insert html here ### -->", Menu)
-                .replace("<!--### insert html here ### -->", "Hello" + user.getName());
+                .replace("<!--### insert html here ### -->", "Hello" + user != null ? user.getName() : "");
     }
 }
