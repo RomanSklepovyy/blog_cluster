@@ -7,6 +7,11 @@ body, html {
     color: #222;
 }
 
+body {background: url(http://localhost:8080/img/fon2.jpg) center repeat;
+    background-size:cover;}
+
+.note {background: #E6E6E6}
+
 .navbar-brand img {width: 150px}
 
 .navbar-nav li {
@@ -15,6 +20,14 @@ body, html {
 
 .nav-link {font-size: 1.1em !important;}
 
+.note {
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.note-header {}
+
+.note-text {}
 
 
 
