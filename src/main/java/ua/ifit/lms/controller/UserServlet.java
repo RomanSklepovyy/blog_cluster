@@ -1,6 +1,7 @@
 package ua.ifit.lms.controller;
 
 import ua.ifit.lms.dao.entity.User;
+import ua.ifit.lms.dao.repository.NoteRepository;
 import ua.ifit.lms.dao.repository.UserRepository;
 import ua.ifit.lms.view.IndexSingletonView;
 import ua.ifit.lms.view.LoginView;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static ua.ifit.lms.dao.entity.User.*;
+
 @WebServlet(name = "UserServlet", urlPatterns = {"/users/*"})
-public class UserServlet extends HttpServlet {
+public class UserServlet<request> extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -49,5 +52,20 @@ public class UserServlet extends HttpServlet {
             out.println(indexSingletonView.getIndexHtml()
                     .replace("<!--### insert html here ### -->", loginView.getloginPage()));
         }
+        if (request.getParameter("name")!= null && request.getParameter("email")!=null && request.getParameter("password")!=null) {
+
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date_created = sdf.format(dt);
+            String date_last_entered = sdf.format(dt);
+
+            UserRepository userRepository = new UserRepository();
+            userRepository.signUpUser(  email, password, name, date_created, date_last_entered);
+        }
     }
+
 }

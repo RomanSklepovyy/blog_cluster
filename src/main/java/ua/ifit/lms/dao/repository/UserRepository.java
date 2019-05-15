@@ -9,29 +9,29 @@ public class UserRepository {
 
 
     public static final String USER_TABLE = "user";
-    public static final String USER_ID ="id";
+  // public static final String USER_ID ="id";
     public static final String USER_NAME = "name";
     public static final String USER_PASSWORD = "password";
     public static final String USER_EMAIL = "email";
-    public static final String USER_DATECREATED = "date_created";
-    public static final String USER_DATELASTENTERED = "date_last_entered";
+    public static final String USER_DATE_CREATED = "date_created";
+    public static final String USER_DATELAST_ENTERED = "date_last_entered";
 
-    public void signUpUser (String id, String email, String password, String name, String date_created, String date_last_entered){
-        String insert = "INSERT INTO" + USER_TABLE +"("
-                +USER_ID+","+USER_EMAIL+"" + ","
+    public void signUpUser ( String email, String password, String name, String date_created, String date_last_entered){
+        String insert = "INSERT INTO " + USER_TABLE +"("
+                +","+USER_EMAIL+"" + ","
                 +USER_PASSWORD+","+USER_NAME+","+
-                USER_DATECREATED+ "," +USER_DATELASTENTERED+
-                ")" + "VALUES(?,?,?,?,?,?)";
+                USER_DATE_CREATED+ "," +USER_DATELAST_ENTERED+
+                ")" + "VALUES(?,?,?,?,?)";
 
         DataSource dataSource = new DataSource();
         try{
             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(insert);
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, date_created);
-            preparedStatement.setString(6, date_last_entered);
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, date_created);
+            preparedStatement.setString(5, date_last_entered);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {e.printStackTrace();}
 
@@ -73,5 +73,4 @@ public class UserRepository {
 
         return null;
     }
-
 }
