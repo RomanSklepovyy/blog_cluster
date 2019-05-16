@@ -55,9 +55,40 @@ public class NoteRepository {
         return notes;
     }
 
-    public void CreateNewNote(Long user_id, String user_name, String text, String title, String date_created, String date_last_edited) {
-        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_USER_NAME + ","+ NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
-                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?,?)";
+    public List<Note> getAllNotes() {
+        DataSource dataSource = new DataSource();
+        List<Note> AllNotes = new ArrayList<>();
+
+        String query = "SELECT id, user_id, text, title, date_created, date_last_edited " +
+                "FROM note ";
+
+        try (
+                Connection connection = dataSource.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+        )
+        {
+            while (resultSet.next())  {
+                Note note =  new Note(
+                        resultSet.getLong("id"),
+                        resultSet.getLong("user_id"),
+                        resultSet.getString("text"),
+                        resultSet.getString("title"),
+                        resultSet.getString("date_created"),
+                        resultSet.getString("date_last_edited")
+                );
+                AllNotes.add(note);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return AllNotes;
+    }
+
+    public void CreateNewNote(Long user_id, String title, String text, String date_created, String date_last_edited) {
+        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TITLE + "," + NOTES_TEXT + "," + NOTES_DATE_CREATED
+                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
 
         DataSource dataSource = new DataSource();
 
