@@ -8,22 +8,14 @@ import java.util.stream.Collectors;
 
 public class NoteView {
 
-    public String getNotePage() {
+    public String getNote(String title, String text, String date_created) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        String indBase = indexSingletonView.getIndexHtml();
-        String Note = indexSingletonView.getNoteHtml();
-        String Menu = indexSingletonView.getMenuHtml();
-        return indBase
-                .replace("<!--### insert html here ### -->", Menu)
-                .replace("<!--### insert html here ### -->", Note);
+        String show_note = indexSingletonView.getShow_note();
+        return show_note
+                .replace("<!--### insert title here ### -->", title)
+                .replace("<!--### insert text here ### -->", text)
+                .replace("<!--### insert date_created here ### -->", date_created);
     }
-
-    /*public String newNoteCreated(Note note) {
-        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        String indBase = indexSingletonView.getIndexHtml();
-        String Note = indexSingletonView.getNoteHtml();
-        return indBase.replace("<!--### insert html here ### -->", "Hello " + note.getTitle());
-    }*/
 
     public String getNotesList(User user) {
         IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
@@ -31,7 +23,7 @@ public class NoteView {
 
         String indBase = indexSingletonView.getIndexHtml();
         String Menu = indexSingletonView.getMenuHtml();
-
+        String show_note = indexSingletonView.getShow_note();
 
         List<Note> notes = noteRepository.getNotesByUserID(user.getId());
 
@@ -39,7 +31,7 @@ public class NoteView {
                 .replace("<!--### insert html here ### -->", Menu)
                 .replace("<!--### insert html here ### -->", "<h1>Hello " + user.getName() + "</h1>" +
                         notes.stream()
-                                .map(e -> "<div>" + e.getText() + "</div>")
+                                .map(e -> getNote(e.getTitle(), e.getText(), e.getDate_created()))
                                 .collect(Collectors.joining(" ")));
     }
 }
