@@ -32,52 +32,38 @@ public class UserServlet<request> extends HttpServlet {
         UserRepository userRepository = new UserRepository();
         LoginView loginView = new LoginView();
 
-        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
+        switch (request.getPathInfo()) {
 
-        if (request.getParameter("email") != null &&
-                request.getParameter("password") != null) {
+            case "/login/":
 
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+                if (request.getParameter("email") != null &&
+                    request.getParameter("password") != null) {
 
-            User user = userRepository.getUserByEmailByPassword(email, password);
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
 
-            // check if a user successfully logged in
-            if (user != null) {
-                session.setAttribute("user", user);
-                response.sendRedirect("/notes/index");
-            } else {
-                out.println(loginView.getloginPage(false));
-            }
+                User user = userRepository.getUserByEmailByPassword(email, password);
 
-        } else {
-            out.println(loginView.getloginPage(true));
-        }
-        if (request.getParameter("name") != null && request.getParameter("email") != null && request.getParameter("password") != null) {
+                if (user != null) {
+                    session.setAttribute("user", user);
+                    response.sendRedirect("/notes/index");
+                } else {
+                    out.println(loginView.getloginPage(false));
+                }
 
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+                } else {
+                out.println(loginView.getloginPage(true));
+                }
+            break;
 
+            case "/users/logout/":
+                session.removeAttribute("user");
+                session.invalidate();
+                response.sendRedirect("/users/login/");
+             break;
 
-
-            java.util.Date dt = new java.util.Date();
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date_created = sdf.format(dt);
-            String date_last_entered = sdf.format(dt);
-            User user = new User(0, email, password, name, date_created, date_last_entered);
-
-            userRepository.saveUser(user);
-            user = userRepository.getUserByEmailByPassword(email, password);
-            response.sendRedirect("/");
-
-            if (user != null) {
-                session.setAttribute("user", user);
-                response.sendRedirect("/notes/index");
-            } else {
-               // out.println(registerView.getRegisterForm());
-            }
-
+             default:
+                 response.sendRedirect("/");
         }
     }
 

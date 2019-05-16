@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-/**
- * Start servlet
- */
+
 @WebServlet(name = "Start", urlPatterns = {"/"})
 public class StartServlet extends HttpServlet {
 
@@ -30,7 +28,7 @@ public class StartServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect("/users/");
+            response.sendRedirect("/users/login/");
         }
 
         else {

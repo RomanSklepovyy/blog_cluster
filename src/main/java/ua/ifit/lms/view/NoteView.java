@@ -25,11 +25,12 @@ public class NoteView {
     }
 
 
-    public String getNote(String title, String text, String date_created) {
+    public String getNote(String title, String text, String date_created, String user_name) {
         return show_note
                 .replace("<!--### insert title here ### -->", text)
                 .replace("<!--### insert text here ### -->", title)
-                .replace("<!--### insert date_created here ### -->", date_created);
+                .replace("<!--### insert date_created here ### -->", date_created)
+                .replace("<!--### insert user name here ### -->", user_name);
     }
 
     public String getUserNotesList(User user) {
@@ -42,7 +43,7 @@ public class NoteView {
                 .replace("<!--### insert html here ### -->",NoteForm)
                 .replace("<!--### insert html here ### -->",
                         notes.stream()
-                                .map(e -> getNote(e.getTitle(), e.getText(), e.getDate_created()))
+                                .map(e -> getNote(e.getTitle(), e.getText(), e.getDate_created(), e.getUser_name()))
                                 .collect(Collectors.joining(" ")));
     }
 
@@ -56,7 +57,7 @@ public class NoteView {
                 .replace("<!--### insert html here ### -->",NoteForm)
                 .replace("<!--### insert html here ### -->",
                         AllNotes.stream()
-                                .map(e -> getNote(e.getTitle(), e.getText(), e.getDate_created()))
+                                .map(e -> getNote(e.getTitle(), e.getText(), e.getDate_created(), e.getUser_name()))
                                 .collect(Collectors.joining(" ")));
     }
 }

@@ -59,7 +59,7 @@ public class NoteRepository {
         DataSource dataSource = new DataSource();
         List<Note> AllNotes = new ArrayList<>();
 
-        String query = "SELECT id, user_id, text, title, date_created, date_last_edited " +
+        String query = "SELECT id, user_id, user_name, text, title, date_created, date_last_edited " +
                 "FROM note ";
 
         try (
@@ -72,6 +72,7 @@ public class NoteRepository {
                 Note note =  new Note(
                         resultSet.getLong("id"),
                         resultSet.getLong("user_id"),
+                        resultSet.getString("user_name"),
                         resultSet.getString("text"),
                         resultSet.getString("title"),
                         resultSet.getString("date_created"),
@@ -86,9 +87,9 @@ public class NoteRepository {
         return AllNotes;
     }
 
-    public void CreateNewNote(Long user_id, String title, String text, String date_created, String date_last_edited) {
-        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TITLE + "," + NOTES_TEXT + "," + NOTES_DATE_CREATED
-                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
+    public void CreateNewNote(Long user_id, String user_name, String title, String text, String date_created, String date_last_edited) {
+        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_USER_NAME + "," + NOTES_TITLE + "," + NOTES_TEXT + "," + NOTES_DATE_CREATED
+                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?,?)";
 
         DataSource dataSource = new DataSource();
 

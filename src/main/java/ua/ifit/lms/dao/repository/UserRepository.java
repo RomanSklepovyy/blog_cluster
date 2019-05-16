@@ -16,26 +16,7 @@ public class UserRepository {
     public static final String USER_DATE_CREATED = "date_created";
     public static final String USER_DATELAST_ENTERED = "date_last_entered";
 
-    /*public void signUpUser ( String email, String password, String name, String date_created, String date_last_entered){
-        String insert = "INSERT INTO " + USER_TABLE +"("
-                +","+USER_EMAIL+"" + ","
-                +USER_PASSWORD+","+USER_NAME+","+
-                USER_DATE_CREATED+ "," +USER_DATELAST_ENTERED+
-                ")" + "VALUES(?,?,?,?,?)";
 
-        DataSource dataSource = new DataSource();
-        try{
-            PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(insert);
-
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, email);
-            preparedStatement.setString(4, date_created);
-            preparedStatement.setString(5, date_last_entered);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {e.printStackTrace();}
-
-        }*/
 
     public void saveUser(User user) {
 
