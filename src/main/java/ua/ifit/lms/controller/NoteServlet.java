@@ -42,8 +42,7 @@ public class NoteServlet extends HttpServlet {
         else {
 
             NoteView noteView = new NoteView();
-            out.println(noteView.getNotesList(user)
-                .replace("<!--### insert html 2 here ### -->", NoteForm));
+            out.println(noteView.getUserNotesList(user));
 
             if (request.getParameter("title")!=null && request.getParameter("text")!=null) {
 

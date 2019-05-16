@@ -17,6 +17,7 @@ public class IndexSingletonView {
     private String loginformfail;
     private String register;
     private String show_note;
+    private String greeting;
 
     private static IndexSingletonView ourInstance = new IndexSingletonView();
 
@@ -36,6 +37,7 @@ public class IndexSingletonView {
         this.loginformfail = getPartialHtml("login-form-fail");
         this.register = getPartialHtml("register");
         this.show_note = getPartialHtml("show_note");
+        this.greeting = getPartialHtml("greeting");
     }
 
     public String getIndexHtml() {
@@ -55,6 +57,8 @@ public class IndexSingletonView {
     public String getRegisterForm() {return register;}
 
     public String getShow_note() {return show_note;}
+
+    public String getGreeting() {return greeting;}
 
     private String getPartialHtml(String filename){
         StringBuilder strb = new StringBuilder();
