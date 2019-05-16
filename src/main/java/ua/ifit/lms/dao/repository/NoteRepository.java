@@ -1,7 +1,9 @@
 package ua.ifit.lms.dao.repository;
 
 import ua.ifit.lms.dao.entity.Note;
+import ua.ifit.lms.dao.entity.User;
 
+import javax.management.Query;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,4 +69,25 @@ public class NoteRepository {
         } catch (SQLException e) {e.printStackTrace();}
     }
 
+    public void deleteNote(Long id) {
+
+        DataSource dataSource = new DataSource();
+
+        String query = "DROP ROWS " +
+                " FROM note " +
+                " WHERE note.id='" + id + "'";
+
+        try (// get connection with our database
+             Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        )
+        {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
