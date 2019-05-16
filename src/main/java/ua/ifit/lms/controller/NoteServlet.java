@@ -29,10 +29,6 @@ public class NoteServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        IndexSingletonView indexSingletonView = IndexSingletonView.getInstance();
-        String NoteForm = indexSingletonView.getNoteHtml();
-
-
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
@@ -57,7 +53,7 @@ public class NoteServlet extends HttpServlet {
                 String date_last_edited = sdf.format(dt);
 
                 NoteRepository noteRepository = new NoteRepository();
-                noteRepository.CreateNewNote(user_id, text, title, date_created, date_last_edited );
+                noteRepository.CreateNewNote(user_id, title, text, date_created, date_last_edited );
                 response.sendRedirect("/notes/");
             }
         }
