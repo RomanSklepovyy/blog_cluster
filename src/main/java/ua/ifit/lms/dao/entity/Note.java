@@ -6,6 +6,7 @@ import java.util.Objects;
     public class Note {
         private long id;
         private long user_id;
+        private String user_name;
         private String title;
         private String text;
         private String date_created;
@@ -14,9 +15,10 @@ import java.util.Objects;
         public Note() {
         }
 
-        public Note(long id, long user_id, String title, String text, String date_created, String date_last_edited) {
+        public Note(long id, long user_id, String user_name, String title, String text, String date_created, String date_last_edited) {
             this.id = id;
             this.user_id = user_id;
+            this.user_name = user_name;
             this.title = title;
             this.text = text;
             this.date_created = date_created;
@@ -38,6 +40,10 @@ import java.util.Objects;
         public void setUser_id(long user_id) {
             this.user_id = user_id;
         }
+
+        public String getUser_name() {return user_name; }
+
+        public void setUser_name(String user_name) {this.user_name = user_name; }
 
         public String getText() {
             return text;
@@ -76,6 +82,7 @@ import java.util.Objects;
             return "Note{" +
                     "id=" + id +
                     ", user_id=" + user_id +
+                    ", user_name=" +user_name+
                     ", title='" + title + '\'' +
                     ", text='" + text + '\'' +
                     ", date_created='" + date_created + '\'' +
@@ -90,6 +97,7 @@ import java.util.Objects;
             ua.ifit.lms.dao.entity.Note note = (ua.ifit.lms.dao.entity.Note) o;
             return id == note.id &&
                     user_id == note.user_id &&
+                    Objects.equals(user_name, note.user_name) &&
                     Objects.equals(title, note.title) &&
                     Objects.equals(text, note.text) &&
                     Objects.equals(date_created, note.date_created) &&
@@ -98,7 +106,7 @@ import java.util.Objects;
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, user_id, title, text, date_created, date_last_edited);
+            return Objects.hash(id, user_id, user_name, title, text, date_created, date_last_edited);
         }
     }
 
