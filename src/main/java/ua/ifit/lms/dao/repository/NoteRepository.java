@@ -13,6 +13,7 @@ public class NoteRepository {
     public static final String NOTES_TABLE = "note";
     public static final String NOTES_ID = "id";
     public static final String NOTES_USER_ID = "user_id";
+    public static final String NOTES_USER_NAME = "user_name";
     public static final String NOTES_TITLE = "title";
     public static final String NOTES_TEXT = "text";
     public static final String NOTES_DATE_CREATED = "date_created";
@@ -22,7 +23,7 @@ public class NoteRepository {
         DataSource dataSource = new DataSource();
         List<Note> notes = new ArrayList<>();
 
-        String query = "SELECT id, user_id, text, title, date_created, date_last_edited " +
+        String query = "SELECT id, user_id, user_name, text, title, date_created, date_last_edited " +
                 "FROM note " +
                 "WHERE note.user_id=" + userid;
 
@@ -35,14 +36,16 @@ public class NoteRepository {
         {
             while (resultSet.next())  {
                 Note note =  new Note(
+
                         resultSet.getLong("id"),
                         resultSet.getLong("user_id"),
+                        resultSet.getString("user_name"),
                         resultSet.getString("text"),
                         resultSet.getString("title"),
                         resultSet.getString("date_created"),
-                        resultSet.getString("date_last_edited")
-                );
-                notes.add(note);
+                        resultSet.getString("date_last_edited"));
+
+                        notes.add(note);
 
             }
 
@@ -52,19 +55,20 @@ public class NoteRepository {
         return notes;
     }
 
-    public void CreateNewNote(Long user_id, String text, String title, String date_created, String date_last_edited) {
-        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
-                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?)";
+    public void CreateNewNote(Long user_id, String user_name, String text, String title, String date_created, String date_last_edited) {
+        String query = "INSERT INTO " + NOTES_TABLE + "(" + NOTES_USER_ID + "," + NOTES_USER_NAME + ","+ NOTES_TEXT + "," + NOTES_TITLE + "," + NOTES_DATE_CREATED
+                + "," + NOTES_DATE_LAST_EDITED + ")" + "VALUES(?,?,?,?,?,?)";
 
         DataSource dataSource = new DataSource();
 
         try {
             PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(query);
             preparedStatement.setLong(1, user_id);
-            preparedStatement.setString(2, text);
-            preparedStatement.setString(3, title);
-            preparedStatement.setString(4, date_created);
-            preparedStatement.setString(5, date_last_edited);
+            preparedStatement.setString(2, user_name);
+            preparedStatement.setString(3, text);
+            preparedStatement.setString(4, title);
+            preparedStatement.setString(5, date_created);
+            preparedStatement.setString(6,  date_last_edited);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {e.printStackTrace();}
     }

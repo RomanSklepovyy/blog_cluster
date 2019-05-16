@@ -51,6 +51,7 @@ public class NoteServlet extends HttpServlet {
                 String text = request.getParameter("text");
 
                 long user_id = user.getId();
+                String user_name = user.getName();
 
                 java.util.Date dt = new java.util.Date();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -58,7 +59,7 @@ public class NoteServlet extends HttpServlet {
                 String date_last_edited = sdf.format(dt);
 
                 NoteRepository noteRepository = new NoteRepository();
-                noteRepository.CreateNewNote(user_id, text, title, date_created, date_last_edited );
+                noteRepository.CreateNewNote(user_id, user_name, text, title, date_created, date_last_edited );
                 response.sendRedirect("/notes/");
             }
         }
