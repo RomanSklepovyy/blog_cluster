@@ -5,10 +5,10 @@ body, html {
     height: 100%;
     font-family: 'Poppins', sans-serif;
     color: #222;
+    background-image: url(http://localhost:8080/img/logo3.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
-
-body {background: url(http://localhost:8080/img/fon2.jpg) center repeat;
-    background-size:cover;}
 
 .note {background: #E6E6E6}
 
@@ -25,7 +25,17 @@ body {background: url(http://localhost:8080/img/fon2.jpg) center repeat;
     margin-top: 50px;
 }
 
-.note-header {}
+.logic-block {
+    margin-top: 50px;
+    background: #E6E6E6}
+
+.btn-primary {margin-bottom: 10px}
+
+.form-group {margin-top: 10px}
+
+.date {margin-bottom: 10px}
+
+.note-header {margin-top: 10px}
 
 .note-text {}
 
